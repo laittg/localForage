@@ -1,3 +1,4 @@
+import mockdb from './drivers/mockdb';
 import idbDriver from './drivers/indexeddb';
 import websqlDriver from './drivers/websql';
 import localstorageDriver from './drivers/localstorage';
@@ -25,6 +26,11 @@ const DefaultDriverOrder = [
     DefaultDrivers.WEBSQL._driver,
     DefaultDrivers.LOCALSTORAGE._driver
 ];
+
+if (typeof window === 'undefined') {
+    DefaultDrivers.MOCKDB = mockdb;
+    DefaultDriverOrder.unshift(DefaultDrivers.MOCKDB._driver);
+}
 
 const OptionalDriverMethods = ['dropInstance'];
 

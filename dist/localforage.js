@@ -347,6 +347,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var mockdb = {
+    _driver: 'mockdb',
+    _initStorage: function _initStorage() {},
+    _support: true,
+    clear: function clear() {},
+    getItem: function getItem() {},
+    iterate: function iterate() {},
+    key: function key() {},
+    keys: function keys() {},
+    length: function length() {},
+    removeItem: function removeItem() {},
+    setItem: function setItem() {}
+};
+
 function getIDB() {
     /* global indexedDB,webkitIndexedDB,mozIndexedDB,OIndexedDB,msIndexedDB */
     try {
@@ -2463,6 +2477,11 @@ var DefaultDrivers = {
 };
 
 var DefaultDriverOrder = [DefaultDrivers.INDEXEDDB._driver, DefaultDrivers.WEBSQL._driver, DefaultDrivers.LOCALSTORAGE._driver];
+
+if (typeof window === 'undefined') {
+    DefaultDrivers.MOCKDB = mockdb;
+    DefaultDriverOrder.unshift(DefaultDrivers.MOCKDB._driver);
+}
 
 var OptionalDriverMethods = ['dropInstance'];
 
